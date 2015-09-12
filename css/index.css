@@ -718,6 +718,35 @@ Common
 }
 /* -------------------------------- 
 
+Header
+
+-------------------------------- */
+
+#header {
+	width: 100%;
+	background: #2c343b;
+}
+#header img {
+	width: 80px;
+	margin: 5px 0 5px 20px;
+}
+#header ul {
+	float: right;
+	margin-right: 20px;
+}
+#header ul li {
+	display: inline-block;
+}
+#header ul li a {
+	display: inline-block;
+	padding: 17px 20px;
+	color: #fff;
+}
+#header ul li a:hover {
+	color: #d44457;
+}
+/* -------------------------------- 
+
 Showcase
 
 -------------------------------- */
@@ -826,4 +855,8 @@ Footer
 	text-align: center;
 	color: #fff;
 	font-size: 0.85em;
+}
+#footer a {
+	text-decoration: none;
+	color: #fff;
 }

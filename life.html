@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>树蛙生活</title>
+		<link rel="shortcut icon" href="img/favicon.ico" />
+		<link rel="stylesheet" href="css/reset.css" />
+		<link rel="stylesheet" href="css/life.css" />
+
+		<script type="text/javascript" src="lib/jquery-2.1.3.js"></script>
+
+		<script type="text/javascript" src="lib/hammer.min.js"></script>
+		<script type="text/javascript" src="lib/jquery.transit.js"></script>
+		<script type="text/javascript" src="lib/slider.js"></script>
+		<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=wNuzRvV4oIRE4o3tZyZOKTRT"></script>
+
+	</head>
+
+	<body>
+		<div id="header">
+			<a href="index.html"><img src="img/logo.png" /></a>
+			<ul>
+				<li><a href="index.html">首页</a></li>
+				<li><a href="http://192.168.235.36/mediawiki" target="_blank" title="仅限广外校园网访问">Wiki</a></li>
+				<li><a href="life.html" target="_blank">人在数挖</a></li>
+			</ul>
+		</div>
+		<div id="map"></div>
+		<div id="slider">
+			<ul class="sliderWrapper">
+				<li><img src="img/photo1.jpg" /></li>
+				<li><img src="img/photo2.jpg" /></li>
+				<li><img src="img/photo3.jpg" /></li>
+				<li><img src="img/photo4.jpg" /></li>
+				<li><img src="img/photo5.jpg" /></li>
+				<li><img src="img/photo6.jpg" /></li>
+				<li><img src="img/photo7.jpg" /></li>
+				<li><img src="img/photo8.jpg" /></li>
+				<li><img src="img/photo9.jpg" /></li>
+				<li><img src="img/photo10.jpg" /></li>
+			</ul>
+		</div>
+		<div id="footer">
+			<div class="wrapper">
+				<p>&copy; 2015 广东外语外贸大学 智能信息处理研究所 版权所有
+					<script type="text/javascript">
+						var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+						document.write(unescape("%3Cspan id='cnzz_stat_icon_1255882218'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1255882218' type='text/javascript'%3E%3C/script%3E"));
+					</script>
+				</p>
+			</div>
+		</div>
+	</body>
+	<script>
+		$("#slider").zSlider({
+			wrapperClass: "sliderWrapper"
+		});
+		var map = new BMap.Map("map");
+		map.centerAndZoom(new BMap.Point(113.400198, 23.057799), 15);
+		map.disableScrollWheelZoom();
+		var onMarker;
+		var onInfoWindow;
+
+		function generateUnit(index, geo, text, img) {
+			// 百度地图API功能
+			var rawContent =
+				"<a href='#' style='text-decoration:none;color:#000'>" +
+				"<img id='nanoImg' style='float:left;margin:4px;padding:5px;'  src='img/replacement1' width='200'/>" +
+				"<h5 style='margin:5px;line-height:1.5;'>replacement2</h5>" +
+				"</a>";
+			var realContent = rawContent.replace("replacement1", img).replace("replacement2", text);
+			var point = new BMap.Point(geo[0], geo[1]);
+			var marker = new BMap.Marker(point);
+			map.addOverlay(marker);
+			var infoWindow = new BMap.InfoWindow(realContent);
+			marker.addEventListener("click", function() {
+				this.openInfoWindow(infoWindow);
+				document.getElementById('nanoImg').onload = function() {
+					infoWindow.redraw();
+				}
+			});
+			if (index == 0) {
+				onMarker = marker;
+				onInfoWindow = infoWindow;
+			}
+		}
+		var geoArray = [
+			[113.406145, 23.072982],
+			[113.413363, 23.068177],
+			[113.422863, 23.060542],
+			[113.416287, 23.050441],
+			[113.403913, 23.039417],
+			[113.389109, 23.041903],
+			[113.376932, 23.042926],
+			[113.381931, 23.063011],
+			[113.385269, 23.065621],
+			[113.398298, 23.077994]
+		];
+		var textArray = new Array("广东外语外贸大学", "广州中医药大学", "广东药学院", "华南理工大学", "广东工业大学", "广州美术学院", "广州大学", "华南师范大学", "星海音乐学院", "中山大学");
+		var imgArray = new Array("photo_small1.jpg", "photo_small2.jpg", "photo_small3.jpg", "photo_small4.jpg", "photo_small5.jpg", "photo_small6.jpg", "photo_small7.jpg", "photo_small8.jpg", "photo_small9.jpg", "photo_small10.jpg");
+		for (var i = 0; i < 10; i++) {
+			generateUnit(i, geoArray[i], textArray[i], imgArray[i]);
+		}
+		onMarker.openInfoWindow(onInfoWindow);
+		window.onload = function() {
+			onInfoWindow.redraw();
+		}
+	</script>
+
+</html>
